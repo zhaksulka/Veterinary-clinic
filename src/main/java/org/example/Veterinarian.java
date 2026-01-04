@@ -6,7 +6,7 @@ public class Veterinarian {
     private String specialization;
     private int experienceYears;
     private boolean available;
-
+    // I made the fields private to protect the data and follow encapsulation.
     // 2. CONSTRUCTOR WITH PARAMETERS
     public Veterinarian(int vetId, String name, String specialization, int experienceYears, boolean available) {
         this.vetId = vetId;

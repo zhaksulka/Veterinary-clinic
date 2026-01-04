@@ -71,7 +71,7 @@ public class Pet {
     public boolean isYoung() {
         return age < 2;
     }
-
+    //This method checks if the pet is younger than two years and returns true or false.
     public String getLifeStage() {
         if (age < 2) {
             return "Puppy/Kitten";

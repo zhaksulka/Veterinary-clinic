@@ -1,62 +1,130 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
+
+    private static ArrayList<Treatment> treatments = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        System.out.println("=== Veterinary Clinic Management System ===\n");
+        int choice;
 
-        // CREATE OBJECTS
-        Pet pet1 = new Pet(101, "Buddy", "Dog", 1, "Alice");
-        Pet pet2 = new Pet(102, "Milo", "Cat", 5, "Bob");
-        Pet pet3 = new Pet();
+        do {
+            System.out.println("\n========================================");
+            System.out.println(" VETERINARY CLINIC MANAGEMENT SYSTEM");
+            System.out.println("========================================");
+            System.out.println("1. Add General Treatment");
+            System.out.println("2. Add Vaccination");
+            System.out.println("3. Add Surgery");
+            System.out.println("4. View All Treatments (Polymorphic)");
+            System.out.println("5. Demonstrate Polymorphism");
+            System.out.println("6. View Vaccinations Only");
+            System.out.println("7. View Surgeries Only");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
 
-        Owner owner1 = new Owner(201, "Alice", "+77011111111", 2, false);
-        Owner owner2 = new Owner();
+            choice = scanner.nextInt();
+            scanner.nextLine();
 
-        Veterinarian vet1 = new Veterinarian(301, "Dr. Smith", "Dog", 6, true);
-        Veterinarian vet2 = new Veterinarian();
+            switch (choice) {
+                case 1 -> addTreatment();
+                case 2 -> addVaccination();
+                case 3 -> addSurgery();
+                case 4 -> viewAll();
+                case 5 -> demonstratePolymorphism();
+                case 6 -> viewVaccinations();
+                case 7 -> viewSurgeries();
+            }
 
-        // DISPLAY OBJECTS
-        System.out.println("--- PETS ---");
-        System.out.println(pet1);
-        System.out.println(pet2);
-        System.out.println(pet3);
+        } while (choice != 0);
 
-        System.out.println("\n--- OWNERS ---");
-        System.out.println(owner1);
-        System.out.println(owner2);
+        System.out.println("Program finished.");
+    }
 
-        System.out.println("\n--- VETERINARIANS ---");
-        System.out.println(vet1);
-        System.out.println(vet2);
+    // ---------- MENU METHODS ----------
 
-        // TEST GETTERS
-        System.out.println("\n--- TESTING GETTERS ---");
-        System.out.println("Pet1 name: " + pet1.getName());
-        System.out.println("Owner1 phone: " + owner1.getPhone());
-        System.out.println("Vet1 experience: " + vet1.getExperienceYears());
+    private static void addTreatment() {
+        System.out.println("\n--- ADD GENERAL TREATMENT ---");
+        System.out.print("ID: ");
+        int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Pet name: ");
+        String pet = scanner.nextLine();
+        System.out.print("Vet name: ");
+        String vet = scanner.nextLine();
+        System.out.print("Cost: ");
+        double cost = scanner.nextDouble();
 
-        // TEST SETTERS
-        System.out.println("\n--- TESTING SETTERS ---");
-        pet3.setName("Rocky");
-        pet3.setSpecies("Dog");
-        pet3.setAge(8);
-        pet3.setOwnerName("Charlie");
-        System.out.println("Updated pet3: " + pet3);
+        treatments.add(new Treatment(id, pet, vet, cost));
+        System.out.println("Treatment added.");
+    }
 
-        // TEST METHODS
-        System.out.println("\n--- TESTING PET METHODS ---");
-        System.out.println(pet1.getName() + " is young: " + pet1.isYoung());
-        System.out.println(pet2.getName() + " life stage: " + pet2.getLifeStage());
+    private static void addVaccination() {
+        System.out.println("\n--- ADD VACCINATION ---");
+        System.out.print("ID: ");
+        int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Pet name: ");
+        String pet = scanner.nextLine();
+        System.out.print("Vet name: ");
+        String vet = scanner.nextLine();
+        System.out.print("Cost: ");
+        double cost = scanner.nextDouble(); scanner.nextLine();
+        System.out.print("Vaccine name: ");
+        String vaccine = scanner.nextLine();
 
-        System.out.println("\n--- TESTING OWNER METHODS ---");
-        owner1.addPet();
-        owner1.addPet();
-        System.out.println(owner1.getName() + " VIP: " + owner1.isVIP());
+        Treatment t = new Vaccination(id, pet, vet, cost, vaccine);
+        treatments.add(t);
+        System.out.println("Vaccination added.");
+    }
 
-        System.out.println("\n--- TESTING VET METHODS ---");
-        System.out.println(vet1.getName() + " experienced: " + vet1.isExperienced());
-        System.out.println(vet1.getName() + " can treat Dog: " + vet1.canTreat("Dog"));
+    private static void addSurgery() {
+        System.out.println("\n--- ADD SURGERY ---");
+        System.out.print("ID: ");
+        int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Pet name: ");
+        String pet = scanner.nextLine();
+        System.out.print("Vet name: ");
+        String vet = scanner.nextLine();
+        System.out.print("Cost: ");
+        double cost = scanner.nextDouble();
+        System.out.print("Duration (minutes): ");
+        int duration = scanner.nextInt();
 
-        System.out.println("\n=== Program Complete ===");
+        treatments.add(new Surgery(id, pet, vet, cost, duration));
+        System.out.println("Surgery added.");
+    }
+
+    private static void viewAll() {
+        System.out.println("\n--- ALL TREATMENTS ---");
+        for (Treatment t : treatments) {
+            System.out.println(t);
+        }
+    }
+
+    private static void demonstratePolymorphism() {
+        System.out.println("\n--- POLYMORPHISM DEMO ---");
+        for (Treatment t : treatments) {
+            t.performTreatment(); // SAME METHOD — DIFFERENT BEHAVIOR
+        }
+    }
+
+    private static void viewVaccinations() {
+        System.out.println("\n--- VACCINATIONS ONLY ---");
+        for (Treatment t : treatments) {
+            if (t instanceof Vaccination) {
+                Vaccination v = (Vaccination) t;
+                System.out.println(v);
+            }
+        }
+    }
+
+    private static void viewSurgeries() {
+        System.out.println("\n--- SURGERIES ONLY ---");
+        for (Treatment t : treatments) {
+            if (t instanceof Surgery) {
+                Surgery s = (Surgery) t;
+                System.out.println(s);
+            }
+        }
     }
 }
