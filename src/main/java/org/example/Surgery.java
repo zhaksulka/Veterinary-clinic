@@ -1,41 +1,36 @@
-public class Surgery extends Treatment {
+package model;
+
+public class Surgery extends Treatment implements Billable {
 
     private int durationMinutes;
 
-    public Surgery(int treatmentId, String petName, String vetName,
-                   double cost, int durationMinutes) {
-        super(treatmentId, petName, vetName, cost);
-        this.durationMinutes = durationMinutes;
+    public Surgery(int id, String pet, String vet, double cost, int durationMinutes) {
+        super(id, pet, vet, cost);
+        setDurationMinutes(durationMinutes);
     }
 
-    public int getDurationMinutes() {
-        return durationMinutes;
-    }
-
-    public void setDurationMinutes(int durationMinutes) {
-        if (durationMinutes > 0) this.durationMinutes = durationMinutes;
-    }
-
-    // override 1
     @Override
     public void performTreatment() {
         System.out.println("Performing surgery on " + petName +
-                " (Duration: " + durationMinutes + " minutes)");
+                " (" + durationMinutes + " minutes)");
     }
 
-    // override 2
     @Override
     public String getType() {
         return "Surgery";
     }
 
-    // unique methods
-    public boolean isLongSurgery() {
-        return durationMinutes > 120;
+    public void setDurationMinutes(int durationMinutes) {
+        if (durationMinutes <= 0) {
+            throw new IllegalArgumentException("Duration must be positive");
+        }
+        this.durationMinutes = durationMinutes;
     }
 
-    public void extendSurgery(int extraMinutes) {
-        durationMinutes += extraMinutes;
+    // Interface method
+    @Override
+    public double calculateBill() {
+        return cost + durationMinutes * 100;
     }
 
     @Override

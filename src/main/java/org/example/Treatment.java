@@ -1,41 +1,55 @@
-public class Treatment {
+package model;
 
-    // protected fields (required)
+public abstract class Treatment {
+
     protected int treatmentId;
     protected String petName;
     protected String vetName;
     protected double cost;
 
-    // constructor
     public Treatment(int treatmentId, String petName, String vetName, double cost) {
-        this.treatmentId = treatmentId;
-        this.petName = petName;
-        this.vetName = vetName;
-        this.cost = cost;
+        setTreatmentId(treatmentId);
+        setPetName(petName);
+        setVetName(vetName);
+        setCost(cost);
     }
 
-    // getters
-    public int getTreatmentId() { return treatmentId; }
-    public String getPetName() { return petName; }
-    public String getVetName() { return vetName; }
-    public double getCost() { return cost; }
-
-    // setters
-    public void setCost(double cost) {
-        if (cost >= 0) this.cost = cost;
-    }
-
-    // methods to override
-    public void performTreatment() {
-        System.out.println("Treatment is being performed for pet " + petName);
-    }
-
-    public String getType() {
-        return "General Treatment";
-    }
-
+    // Concrete method
     public boolean isExpensive() {
         return cost > 10000;
+    }
+
+    // Abstract methods (REQUIRED)
+    public abstract void performTreatment();
+    public abstract String getType();
+
+    // Setters with exceptions
+    public void setTreatmentId(int treatmentId) {
+        if (treatmentId <= 0) {
+            throw new IllegalArgumentException("Treatment ID must be positive");
+        }
+        this.treatmentId = treatmentId;
+    }
+
+    public void setPetName(String petName) {
+        if (petName == null || petName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Pet name cannot be empty");
+        }
+        this.petName = petName;
+    }
+
+    public void setVetName(String vetName) {
+        if (vetName == null || vetName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vet name cannot be empty");
+        }
+        this.vetName = vetName;
+    }
+
+    public void setCost(double cost) {
+        if (cost < 0) {
+            throw new IllegalArgumentException("Cost cannot be negative");
+        }
+        this.cost = cost;
     }
 
     @Override

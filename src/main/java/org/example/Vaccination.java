@@ -1,41 +1,29 @@
+package model;
+
 public class Vaccination extends Treatment {
 
     private String vaccineName;
 
-    public Vaccination(int treatmentId, String petName, String vetName,
-                       double cost, String vaccineName) {
-        super(treatmentId, petName, vetName, cost); // FIRST LINE
-        this.vaccineName = vaccineName;
+    public Vaccination(int id, String pet, String vet, double cost, String vaccineName) {
+        super(id, pet, vet, cost);
+        setVaccineName(vaccineName);
     }
 
-    public String getVaccineName() {
-        return vaccineName;
-    }
-
-    public void setVaccineName(String vaccineName) {
-        this.vaccineName = vaccineName;
-    }
-
-    // override 1
     @Override
     public void performTreatment() {
-        System.out.println("Vaccinating " + petName +
-                " with vaccine: " + vaccineName);
+        System.out.println("Vaccinating " + petName + " with " + vaccineName);
     }
 
-    // override 2
     @Override
     public String getType() {
         return "Vaccination";
     }
 
-    // unique methods
-    public boolean isAnnualVaccine() {
-        return vaccineName.equalsIgnoreCase("Rabies");
-    }
-
-    public void printCertificate() {
-        System.out.println("Vaccination certificate issued for " + petName);
+    public void setVaccineName(String vaccineName) {
+        if (vaccineName == null || vaccineName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vaccine name cannot be empty");
+        }
+        this.vaccineName = vaccineName;
     }
 
     @Override
