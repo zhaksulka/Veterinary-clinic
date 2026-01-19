@@ -1,3 +1,5 @@
+package model;
+
 public class Owner {
 
     // 1. PRIVATE FIELDS
@@ -7,12 +9,12 @@ public class Owner {
     private int numberOfPets;
     private boolean frequentClient;
 
-    // 2. CONSTRUCTOR WITH PARAMETERS
+    // 2. CONSTRUCTOR WITH PARAMETERS (USES SETTERS)
     public Owner(int ownerId, String name, String phone, int numberOfPets, boolean frequentClient) {
-        this.ownerId = ownerId;
-        this.name = name;
-        this.phone = phone;
-        this.numberOfPets = numberOfPets;
+        setOwnerId(ownerId);
+        setName(name);
+        setPhone(phone);
+        setNumberOfPets(numberOfPets);
         this.frequentClient = frequentClient;
     }
 
@@ -46,21 +48,34 @@ public class Owner {
         return frequentClient;
     }
 
-    // 5. SETTERS
+    // 5. SETTERS (THROW EXCEPTIONS – REQUIRED)
     public void setOwnerId(int ownerId) {
+        if (ownerId <= 0) {
+            throw new IllegalArgumentException("Owner ID must be positive");
+        }
         this.ownerId = ownerId;
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Owner name cannot be empty");
+        }
         this.name = name;
     }
 
     public void setPhone(String phone) {
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new IllegalArgumentException("Phone number cannot be empty");
+        }
         this.phone = phone;
     }
 
     public void setNumberOfPets(int numberOfPets) {
+        if (numberOfPets < 0) {
+            throw new IllegalArgumentException("Number of pets cannot be negative");
+        }
         this.numberOfPets = numberOfPets;
+        this.frequentClient = numberOfPets >= 3;
     }
 
     public void setFrequentClient(boolean frequentClient) {
@@ -70,9 +85,7 @@ public class Owner {
     // 6. ADDITIONAL METHODS
     public void addPet() {
         numberOfPets++;
-        if (numberOfPets >= 3) {
-            frequentClient = true;
-        }
+        frequentClient = numberOfPets >= 3;
     }
 
     public boolean isVIP() {
