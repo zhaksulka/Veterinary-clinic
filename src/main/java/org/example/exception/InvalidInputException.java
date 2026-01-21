@@ -1,4 +1,4 @@
-package exception;
+package org.example.exception;
 
 public class InvalidInputException extends Exception {
     public InvalidInputException(String message) {
