@@ -1,6 +1,5 @@
-package org.example.menu;
+package menu;
 
 public interface Menu {
     void displayMenu();
-    void run();
 }

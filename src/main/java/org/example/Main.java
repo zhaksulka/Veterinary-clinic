@@ -1,9 +1,8 @@
-import org.example.menu.Menu;
-import org.example.menu.MenuManager;
+import menu.ClinicMenu;
 
 public class Main {
     public static void main(String[] args) {
-        Menu menu = new MenuManager();
-        menu.run();
+        ClinicMenu menu = new ClinicMenu();
+        menu.displayMenu();
     }
 }
