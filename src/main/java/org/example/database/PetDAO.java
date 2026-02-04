@@ -1,4 +1,4 @@
-package database;
+package org.example.database;
 
 import model.Pet;
 

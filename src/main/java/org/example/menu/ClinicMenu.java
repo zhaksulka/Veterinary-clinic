@@ -1,7 +1,8 @@
 package menu;
 
-import database.PetDAO;
+import org.example.database.PetDAO;
 import model.Pet;
+import org.example.menu.Menu;
 
 import java.util.List;
 import java.util.Scanner;
